@@ -5,12 +5,18 @@
 package clickmove.worldmodel;
 import java.lang.Math;
 
+import clickmove.graphics.Camera;
+import clickmove.graphics.graphicsobjects.EllipseObject;
+import clickmove.graphics.graphicsobjects.GraphicsObject;
+
 
 /**
  * @author dmasad
  * The MobileObj class is a subclass of WorldObj 
- * for objects that have a specific velocity.  
+ * for objects that have a specific velocity in a specific direction.
+ * It's also a placeholder for testing purposes.  
  */
+
 public class MobileObj extends WorldObj {
 	
 	public double x_speed;
@@ -22,7 +28,7 @@ public class MobileObj extends WorldObj {
 		y = starting_y;
 		
 		x_speed = 0;
-		y_speed = 0;
+		y_speed = 0;		
 	}
 	
 	/** 
@@ -44,6 +50,11 @@ public class MobileObj extends WorldObj {
 		// angle in radians.
 		y_speed = magnitude * Math.sin(angle);
 		x_speed = magnitude * Math.cos(angle);
+	}
+	
+	public GraphicsObject setGraphicsObject(Camera camera, int xCoord, int yCoord) {
+		graphicsObject = new EllipseObject(camera, this, xCoord, yCoord); 
+		return graphicsObject;
 	}
 	
 }

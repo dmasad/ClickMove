@@ -4,6 +4,7 @@
 package clickmove.graphics;
 
 import clickmove.worldmodel.*;
+import clickmove.graphics.graphicsobjects.*;
 
 import java.lang.Math;
 
@@ -42,7 +43,7 @@ public class Camera extends Canvas {
 	protected double max_y;
 	
 	protected ArrayList<WorldObj> visObjects; // All objects currently visible.
-	public ArrayList<Shape> drawnObjects; // All objects currently drawn on the screen.
+	public ArrayList<GraphicsObject> drawnObjects; // All objects currently drawn on the screen.
 	public ArrayList<Shape> controlObjects = new ArrayList<Shape>(); // All control-related objects.
 	
 
@@ -91,6 +92,7 @@ public class Camera extends Canvas {
 	 */
 	private ArrayList<WorldObj> findVisible() {
 		ArrayList<WorldObj> visibleObjects = new ArrayList<WorldObj>();
+		
 		for(WorldObj obj : world.allWorldObjects) {
 			if (obj.x >= min_x && obj.x <= max_x && obj.y >= min_y && obj.y <= max_y)
 				visibleObjects.add(obj);
@@ -99,25 +101,36 @@ public class Camera extends Canvas {
 	}
 	
 	private void drawVisible() {
-		drawnObjects = new ArrayList<Shape>();
+		drawnObjects = new ArrayList<GraphicsObject>();
+		visObjects = new ArrayList<WorldObj>();
 		
+		for (WorldObj obj : world.allWorldObjects) {
+			if (obj.x >= min_x && obj.x <= max_x && obj.y >= min_y && obj.y <= max_y) {
+				visObjects.add(obj);
+				int[] coords = coordinateConverter(obj);
+				drawnObjects.add(obj.setGraphicsObject(this, coords[0], coords[1]));
+			} else obj.graphicsObject = null;
+			
+		}
+		
+		/*
 		// PLACEHOLDER: Draw a circle for each visible object:
 		for (WorldObj obj : visObjects)
 		{
 			int[] coords = coordinateConverter(obj);
-			int radius = (int)Math.round(16 * zoom);
 			//graphics.fillOval(coords[0], coords[1], radius, radius);
-			drawnObjects.add(new Ellipse2D.Double(coords[0], coords[1], radius, radius));
+			drawnObjects.add(obj.setGraphicsObject(this, coords[0], coords[1]));
 		}
-		
+		*/
 	}
+	
 	
 	/**
 	 * Takes an object and finds its screen coordinates, given the current position.
 	 * @param obj a WorldObj object to be placed on the screen.
 	 * @return a 2-member int array with the {x, y} coordinates in pixels. 
 	 */
-	private int[] coordinateConverter(WorldObj obj) {
+	protected int[] coordinateConverter(WorldObj obj) {
 		int x_coord = (int)Math.round((obj.x - min_x) * zoom);
 		int y_coord = (int)Math.round((obj.y - min_y) * zoom);
 		int[] coords = {x_coord, y_coord}; 
@@ -148,7 +161,7 @@ public class Camera extends Canvas {
 		graphics.setBackground(Color.black);
 		graphics.clearRect(0, 0, WIDTH, HEIGHT);
 		
-		visObjects = findVisible();
+		//visObjects = findVisible();
 		drawVisible();
 		
 		render(graphics);
@@ -161,9 +174,8 @@ public class Camera extends Canvas {
 		//visObjects = findVisible();
 		graphics.setColor(Color.WHITE);
 		
-		for (Shape s : drawnObjects) {
-			//graphics.draw(s);
-			graphics.fill(s);
+		for (GraphicsObject s : drawnObjects) {
+			s.render(graphics);
 		}
 		
 		for (Shape s : controlObjects) 

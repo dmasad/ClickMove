@@ -8,6 +8,9 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import clickmove.graphics.graphicsobjects.GraphicsObject;
+import clickmove.worldmodel.WorldObj;
+
 /**
  * The class that handles all the mouse and keyboard controls.
  * @author dmasad
@@ -30,7 +33,7 @@ public class Controller {
 	
 	int state = DEFAULT_STATE;
 
-	Shape selected = null; // The selected shape
+	WorldObj selected = null; // The selected shape
 	
 	public Controller(Camera newCamera) {
 		camera = newCamera;
@@ -49,9 +52,9 @@ public class Controller {
 			
 			if (state==DEFAULT_STATE) {
 				// Check to see if the mouse has been clicked on an object
-				for (Shape s : camera.drawnObjects) {
+				for (GraphicsObject s : camera.drawnObjects) {
 					if(s.contains(mouseX, mouseY)) {
-						selected = s;
+						selected = s.worldObj;
 						state = SELECTED_STATE;
 						System.out.println("Yes");
 					}
@@ -61,8 +64,8 @@ public class Controller {
 		
 		public void mouseReleased(MouseEvent e) {
 			if (state==DRAGGING_STATE) {
-				
 				camera.controlObjects.clear();
+				state = SELECTED_STATE;
 			}
 			
 		}
@@ -74,7 +77,7 @@ public class Controller {
 			// Deselect:
 			if (state==SELECTED_STATE) {
 				boolean flag = false;
-				for (Shape s : camera.drawnObjects)
+				for (GraphicsObject s : camera.drawnObjects)
 					if (s.contains(mouseX, mouseY)) flag = true;
 				if (flag == false) {
 					state = DEFAULT_STATE;
@@ -109,8 +112,8 @@ public class Controller {
 				int mouseX = e.getX();
 				int mouseY = e.getY();
 				
-				double selectedX = selected.getBounds().x;
-				double selectedY = selected.getBounds().y;
+				double selectedX = selected.graphicsObject.x;
+				double selectedY = selected.graphicsObject.y;
 				
 				Line2D.Double pointLine = new Line2D.Double(mouseX, mouseY, selectedX, selectedY);
 				//camera.drawnObjects.add(pointLine);
