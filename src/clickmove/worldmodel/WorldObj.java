@@ -8,9 +8,10 @@ package clickmove.worldmodel;
 import clickmove.graphics.Camera;
 import clickmove.graphics.graphicsobjects.GraphicsObject;
 
-public abstract class WorldObj {
+public abstract class WorldObj implements CommandableUnit {
 	public double x;
 	public double y;
+	public boolean selectable;
 	public boolean selected;
 	
 	public GraphicsObject graphicsObject; // The GraphicsObject currently associated with this WorldObj.

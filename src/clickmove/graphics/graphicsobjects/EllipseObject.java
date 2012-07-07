@@ -5,6 +5,7 @@ package clickmove.graphics.graphicsobjects;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 import clickmove.graphics.Camera;
 import clickmove.worldmodel.WorldObj;
@@ -26,7 +27,9 @@ public class EllipseObject extends GraphicsObject {
 	}
 	
 	public void render(Graphics2D g) {
-		System.out.println("Here");
+		if (selected == true) {
+			g.draw(new Rectangle2D.Double(x, y, radius, radius));
+		}
 		g.fill(circle);
 	}
 	

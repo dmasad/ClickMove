@@ -17,7 +17,7 @@ import clickmove.graphics.graphicsobjects.GraphicsObject;
  * It's also a placeholder for testing purposes.  
  */
 
-public class MobileObj extends WorldObj {
+public class MobileObj extends WorldObj implements CommandableUnit {
 	
 	public double x_speed;
 	public double y_speed;
@@ -45,7 +45,7 @@ public class MobileObj extends WorldObj {
 	 * @param angle The angle in radians.
 	 * @param magnitude The magnitude of the new velocity.
 	 */
-	public void set_vector(float angle, float magnitude)
+	public void setVector(float angle, float magnitude)
 	{
 		// angle in radians.
 		y_speed = magnitude * Math.sin(angle);

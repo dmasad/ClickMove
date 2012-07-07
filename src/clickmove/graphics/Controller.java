@@ -44,7 +44,6 @@ public class Controller {
 	 */
 	public MouseAdapter mouseadapter = new MouseAdapter() {
 		
-		// Temporarily replaced MouseClicked with mousePressed
 		public void mousePressed(MouseEvent e) {
 			int mouseX = e.getX();
 			int mouseY = e.getY();
@@ -55,8 +54,8 @@ public class Controller {
 				for (GraphicsObject s : camera.drawnObjects) {
 					if(s.contains(mouseX, mouseY)) {
 						selected = s.worldObj;
+						selected.selected = true;
 						state = SELECTED_STATE;
-						System.out.println("Yes");
 					}
 				}
 			}	
@@ -65,6 +64,23 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {
 			if (state==DRAGGING_STATE) {
 				camera.controlObjects.clear();
+				
+				// Issue the order:
+				int mouseX = e.getX();
+				int mouseY = e.getY();
+				double selectedX = selected.graphicsObject.x;
+				double selectedY = selected.graphicsObject.y;
+				
+				double deltaY = mouseY - selectedY;
+				double deltaX = mouseX - selectedX;
+				
+				double angle = Math.atan2(deltaY, deltaX);
+				double distance = Math.sqrt(deltaY*deltaY + deltaX*deltaX) / 100;
+				
+				System.out.println((float)angle);
+				//System.out.println((float)distance);
+				selected.setVector((float)angle, (float)distance);
+				
 				state = SELECTED_STATE;
 			}
 			
@@ -81,6 +97,7 @@ public class Controller {
 					if (s.contains(mouseX, mouseY)) flag = true;
 				if (flag == false) {
 					state = DEFAULT_STATE;
+					selected.selected = false;
 					selected = null;
 					camera.controlObjects.clear();
 				}
@@ -104,22 +121,27 @@ public class Controller {
 		
 		public void mouseDragged(MouseEvent e) {
 
-			if(state==SELECTED_STATE || state==DRAGGING_STATE) {
-				//System.out.println(state);
-				state = DRAGGING_STATE;
-				
-				// Draw a line from the selected unit to the mouse.
-				int mouseX = e.getX();
-				int mouseY = e.getY();
-				
-				double selectedX = selected.graphicsObject.x;
-				double selectedY = selected.graphicsObject.y;
-				
-				Line2D.Double pointLine = new Line2D.Double(mouseX, mouseY, selectedX, selectedY);
-				//camera.drawnObjects.add(pointLine);
-				camera.controlObjects.clear();
-				camera.controlObjects.add(pointLine);
+			if((state==SELECTED_STATE || state==DRAGGING_STATE)) {
+				if (selected.graphicsObject != null ) {
+					state = DRAGGING_STATE;
+					
+					// Draw a line from the selected unit to the mouse.
+					int mouseX = e.getX();
+					int mouseY = e.getY();
+					
+					double selectedX = selected.graphicsObject.x;
+					double selectedY = selected.graphicsObject.y;
+					
+					Line2D.Double pointLine = new Line2D.Double(mouseX, mouseY, selectedX, selectedY);
+					//camera.drawnObjects.add(pointLine);
+					camera.controlObjects.clear();
+					camera.controlObjects.add(pointLine);
+				}
+				else {
+					state = SELECTED_STATE;
+				}
 			}
+			
 		}
 		
 	};

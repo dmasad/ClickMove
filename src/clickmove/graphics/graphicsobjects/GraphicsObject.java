@@ -15,6 +15,8 @@ public class GraphicsObject {
 	public WorldObj worldObj; // The underlying object.
 	private Camera camera; // The camera associated with the object
 	
+	public boolean selected;
+	
 	// Screen coordinates:
 	public int x;
 	public int y;
@@ -27,6 +29,7 @@ public class GraphicsObject {
 	public GraphicsObject(Camera myCamera, WorldObj underlyingObj, int xCoord, int yCoord) {
 		camera = myCamera;
 		worldObj = underlyingObj;
+		selected = worldObj.selected;
 		
 		x = xCoord;
 		y = yCoord;
