@@ -3,6 +3,8 @@ package clickmove.graphics;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Line2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -77,8 +79,6 @@ public class Controller {
 				double angle = Math.atan2(deltaY, deltaX);
 				double distance = Math.sqrt(deltaY*deltaY + deltaX*deltaX) / 100;
 				
-				System.out.println((float)angle);
-				//System.out.println((float)distance);
 				selected.setVector((float)angle, (float)distance);
 				
 				state = SELECTED_STATE;
@@ -167,6 +167,15 @@ public class Controller {
 	}
 	
 	
+	/*
+	 * Button Action Listeners
+	 */
 	
+	public ActionListener fullStopPressed = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if (selected != null)
+				selected.setVector(0,0);
+		}
+	};
 	
 }

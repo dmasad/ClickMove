@@ -28,6 +28,7 @@ import java.awt.geom.Line2D;
 public class Camera extends Canvas {
 	
 	protected World world; // The underlying world-model.
+	public Controller controller;
 	
 	// Canvas dimensions
 	protected int WIDTH;
@@ -65,7 +66,7 @@ public class Camera extends Canvas {
 		super.setIgnoreRepaint(true);
 		
 		// Initiate the controllers:
-		Controller controller = new Controller(this);
+		controller = new Controller(this);
 		super.addMouseListener(controller.mouseadapter);
 		super.addMouseMotionListener(controller.mousemotionlistener);
 		
