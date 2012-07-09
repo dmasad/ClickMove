@@ -5,6 +5,8 @@
 
 package clickmove.worldmodel;
 
+import java.util.ArrayList;
+
 import clickmove.graphics.Camera;
 import clickmove.graphics.graphicsobjects.GraphicsObject;
 
@@ -13,6 +15,8 @@ public abstract class WorldObj implements CommandableUnit {
 	public double y;
 	public boolean selectable;
 	public boolean selected;
+	
+	public ArrayList<SubSystem> subSystems = new ArrayList<SubSystem>();
 	
 	public GraphicsObject graphicsObject; // The GraphicsObject currently associated with this WorldObj.
 	
