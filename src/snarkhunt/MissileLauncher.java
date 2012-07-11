@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 
 import clickmove.worldmodel.SubSystem;
 import clickmove.worldmodel.World;
-import clickmove.worldmodel.WorldObj;
-
 
 /**
  * The ship subsystem that deploys missiles.
@@ -32,7 +30,7 @@ public class MissileLauncher extends SubSystem<Integer> {
 	 * @param parentObj: The parent WorldObj; e.g. the ship carrying the launcher
 	 * @param value: The number of missiles the ship starts out with.
 	 */
-	public MissileLauncher(World world, WorldObj parentObj, int value) {
+	public MissileLauncher(World world, MissileBoat parentObj, int value) {
 		super(parentObj, value);
 		gameWorld = world;
 		
@@ -41,7 +39,7 @@ public class MissileLauncher extends SubSystem<Integer> {
 		component.setPreferredSize(new Dimension(250, 100));
 		
 		// Label and button:
-		lblCounter = new JLabel(""+value);
+		lblCounter = new JLabel("Missiles Remaining: "+value);
 		btnLaunch = new JButton("Launch Missile");
 		btnLaunch.addActionListener(actionListener);
 		
@@ -62,7 +60,16 @@ public class MissileLauncher extends SubSystem<Integer> {
 		public void actionPerformed(ActionEvent e) {
 			value--;
 			if (value==0) btnLaunch.setEnabled(false);
-			lblCounter.setText("" + value);
+			lblCounter.setText("Missiles Remaining: " + value);
+			
+			//Deploy missile:
+			MissileBoat mb = (MissileBoat) rootObj;
+			Missile newMissile = new Missile(mb.xSpeed, mb.ySpeed);
+			newMissile.x = mb.x + mb.xSpeed * 100; // Missile starts out 10 ticks ahead of parent.
+			newMissile.y = mb.y + mb.ySpeed * 100;
+			gameWorld.add_object(newMissile);
+			
+			
 		}
 	};
 }
