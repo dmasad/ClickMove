@@ -63,10 +63,10 @@ public class MissileLauncher extends SubSystem<Integer> {
 			lblCounter.setText("Missiles Remaining: " + value);
 			
 			//Deploy missile:
-			MissileBoat mb = (MissileBoat) rootObj;
-			Missile newMissile = new Missile(mb.xSpeed, mb.ySpeed);
-			newMissile.x = mb.x + mb.xSpeed * 100; // Missile starts out 10 ticks ahead of parent.
-			newMissile.y = mb.y + mb.ySpeed * 100;
+			//MissileBoat mb = (MissileBoat) rootObj;
+			Missile newMissile = new Missile( ((MissileBoat)rootObj).xSpeed, ((MissileBoat)rootObj).ySpeed);
+			newMissile.x = ((MissileBoat)rootObj).x + 10; // Missile starts out 10 ticks ahead of parent.
+			newMissile.y = ((MissileBoat)rootObj).y + 10;
 			gameWorld.add_object(newMissile);
 			
 			

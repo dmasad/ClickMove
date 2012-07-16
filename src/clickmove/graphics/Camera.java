@@ -106,11 +106,13 @@ public class Camera extends Canvas {
 		visObjects = new ArrayList<WorldObj>();
 		
 		for (WorldObj obj : world.allWorldObjects) {
-			if (obj.x >= min_x && obj.x <= max_x && obj.y >= min_y && obj.y <= max_y) {
+			if (obj.x >= min_x && obj.x <= max_x 
+					&& obj.y >= min_y && obj.y <= max_y 
+					&& obj.visible == true ) {
 				visObjects.add(obj);
 				int[] coords = coordinateConverter(obj);
-				drawnObjects.add(obj.setGraphicsObject(this, coords[0], coords[1]));
-			} else obj.graphicsObject = null;
+				drawnObjects.add(obj.setGraphicsObject(coords[0], coords[1]));
+			} //else obj.graphicsObject = null;
 			
 		}
 		
@@ -174,6 +176,8 @@ public class Camera extends Canvas {
 		// TODO: Put in detailed rendering instructions here.
 		//visObjects = findVisible();
 		graphics.setColor(Color.WHITE);
+		
+		//System.out.println("" + controller.state);
 		
 		for (GraphicsObject s : drawnObjects) {
 			s.render(graphics);

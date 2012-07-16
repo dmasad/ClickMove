@@ -16,8 +16,10 @@ public class CircleGraphic extends GraphicsObject {
 	protected Color color;
 	protected Ellipse2D.Double circle;
 
-	public CircleGraphic(Camera myCamera, WorldObj underlyingObj, int xCoord, int yCoord, int r, Color c) {
-		super(myCamera, underlyingObj, xCoord, yCoord);
+	//public CircleGraphic(Camera myCamera, WorldObj underlyingObj, int xCoord, int yCoord, int r, Color c) {
+	public CircleGraphic(WorldObj underlyingObj, int xCoord, int yCoord, int r, Color c) {
+		//super(myCamera, underlyingObj, xCoord, yCoord);
+		super(underlyingObj, xCoord, yCoord);
 		radius = r;
 		color = c;
 		circle = new Ellipse2D.Double(x, y, radius, radius);
@@ -33,6 +35,14 @@ public class CircleGraphic extends GraphicsObject {
 		}
 		g.setColor(color);
 		g.fill(circle);
+	}
+	
+	public void setCoords(int newX, int newY) {
+		x = newX;
+		y = newY;
+		
+		circle.x = x;
+		circle.y = y;
 	}
 	
 	public boolean contains(double xCoord, double yCoord) {

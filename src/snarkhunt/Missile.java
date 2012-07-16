@@ -23,7 +23,12 @@ public class Missile extends WorldObj implements CommandableUnit {
 	private double speed;
 	private double heading;
 	
-	public Missile(double startingX, double startingY) {
+	//CircleGraphic graphicsObject;
+	
+	public Missile(double startingX , double startingY) {
+		visible = true;
+		selectable = true;
+		graphicsObject = new CircleGraphic(this, 0, 0, 4, Color.GREEN);
 		
 		xSpeed = startingX;
 		ySpeed = startingY;
@@ -48,8 +53,8 @@ public class Missile extends WorldObj implements CommandableUnit {
 		
 	}
 	
-	public GraphicsObject setGraphicsObject(Camera camera, int xCoord, int yCoord) {
-		graphicsObject = new CircleGraphic(camera, this, xCoord, yCoord, 4, Color.GREEN); 
+	public GraphicsObject setGraphicsObject(int xCoord, int yCoord) {
+		graphicsObject.setCoords(xCoord, yCoord);
 		return graphicsObject;
 	}
 	

@@ -8,14 +8,22 @@ public class SnarkHuntTest extends MainGame {
 	
 		public SnarkHuntTest()
 		{
-			super(new World());
+			super(new SnarkHuntWorld());
 			
 			MissileBoat boat1 = new MissileBoat(world);
 			boat1.x = 100;
 			boat1.y = 100;
 			boat1.acceleration = 0.0005;
-			world.add_object(boat1);
 			
+			Snark snark1 = new Snark(world);
+			snark1.x = 250;
+			snark1.y = 250;
+			
+			world.add_object(boat1);
+			world.add_object(snark1);
+			
+			((SnarkHuntWorld)world).aiObjects.add(snark1);
+			((SnarkHuntWorld)world).playerObjects.add(boat1);
 		}
 
 		/**

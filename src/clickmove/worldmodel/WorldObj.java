@@ -15,14 +15,28 @@ public abstract class WorldObj implements CommandableUnit {
 	public double y;
 	public boolean selectable;
 	public boolean selected;
+	public boolean visible;
 	
 	public ArrayList<SubSystem> subSystems = new ArrayList<SubSystem>();
 	
 	public GraphicsObject graphicsObject; // The GraphicsObject currently associated with this WorldObj.
 	
-	public GraphicsObject setGraphicsObject(Camera camera, int xCoord, int yCoord) {
-		graphicsObject = new GraphicsObject(camera, this, xCoord, yCoord);
+	public GraphicsObject setGraphicsObject(int xCoord, int yCoord) {
 		return graphicsObject;
+	}
+	
+	public void select() {
+		if(selectable) {
+			selected = true;
+			graphicsObject.selected = true;
+		}
+	}
+	
+	public void deselect() {
+		if(selectable) {
+			selected = false;
+			graphicsObject.selected = false;
+		}
 	}
 	  
 	public abstract void update(int timestep);  

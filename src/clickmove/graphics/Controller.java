@@ -55,9 +55,10 @@ public class Controller {
 				// Check to see if the mouse has been clicked on an object
 				for (GraphicsObject s : camera.drawnObjects) {
 					if(s.contains(mouseX, mouseY)) {
-						selected = s.worldObj;
-						selected.selected = true;
 						state = SELECTED_STATE;
+						selected = s.worldObj;
+						selected.select();
+						//selected.selected = true;
 					}
 				}
 			}	
@@ -66,7 +67,6 @@ public class Controller {
 		public void mouseReleased(MouseEvent e) {
 			if (state==DRAGGING_STATE) {
 				camera.controlObjects.clear();
-				
 				// Issue the order:
 				int mouseX = e.getX();
 				int mouseY = e.getY();
@@ -97,7 +97,8 @@ public class Controller {
 					if (s.contains(mouseX, mouseY)) flag = true;
 				if (flag == false) {
 					state = DEFAULT_STATE;
-					selected.selected = false;
+					//selected.selected = false;
+					selected.deselect();
 					selected = null;
 					camera.controlObjects.clear();
 				}
@@ -122,7 +123,8 @@ public class Controller {
 		public void mouseDragged(MouseEvent e) {
 
 			if((state==SELECTED_STATE || state==DRAGGING_STATE)) {
-				if (selected.graphicsObject != null ) {
+				//if (selected.graphicsObject != null ) {
+				if (selected != null ) {
 					state = DRAGGING_STATE;
 					
 					// Draw a line from the selected unit to the mouse.

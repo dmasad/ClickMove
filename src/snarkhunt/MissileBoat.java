@@ -17,13 +17,22 @@ public class MissileBoat extends WorldObj implements CommandableUnit {
 	
 	public double target_xSpeed;
 	public double target_ySpeed;
-	
+	public Sensor sensor;
 	public double acceleration; // Change in units per timestep.
 	public float heading;
 	
+	//CircleGraphic graphicsObject;
+	
 	public MissileBoat(World world) {
-		// TODO: Add sensors
+		
+		selectable = true;
+		visible = true;
+		
+		sensor = new Sensor(this, false, 100, 10);
 		subSystems.add(new MissileLauncher(world, this, 5));
+		subSystems.add(sensor);
+		graphicsObject = new CircleGraphic(this, 0, 0, 8, Color.BLUE);
+	
 	}
 	
 	public void update(int timestep)
@@ -55,9 +64,20 @@ public class MissileBoat extends WorldObj implements CommandableUnit {
 	}
 	
 
-	public GraphicsObject setGraphicsObject(Camera camera, int xCoord, int yCoord) {
-		 graphicsObject = new CircleGraphic(camera, this, xCoord, yCoord, 8, Color.BLUE);
+	public GraphicsObject setGraphicsObject(int xCoord, int yCoord) {
+		graphicsObject.setCoords(xCoord, yCoord);  
 		return graphicsObject;
+	}
+	
+	public void select() {
+		selected = true;
+		graphicsObject.selected = true;
+	}
+	
+	public void deselect()
+	{
+		selected = false;
+		graphicsObject.selected = false;
 	}
 	
 	// Returns the value with the lowest absolute value:

@@ -13,7 +13,7 @@ import clickmove.worldmodel.*;
  */
 public class GraphicsObject {
 	public WorldObj worldObj; // The underlying object.
-	private Camera camera; // The camera associated with the object
+	//private Camera camera; // The camera associated with the object
 	
 	public boolean selected;
 	
@@ -26,8 +26,9 @@ public class GraphicsObject {
 	 * @param myCamera The camera this object is visible in.
 	 * @param underlyingObj The object this graphic represents.
 	 */
-	public GraphicsObject(Camera myCamera, WorldObj underlyingObj, int xCoord, int yCoord) {
-		camera = myCamera;
+	//public GraphicsObject(Camera myCamera, WorldObj underlyingObj, int xCoord, int yCoord) {
+	public GraphicsObject(WorldObj underlyingObj, int xCoord, int yCoord) {
+		//camera = myCamera;
 		worldObj = underlyingObj;
 		selected = worldObj.selected;
 		
@@ -41,6 +42,11 @@ public class GraphicsObject {
 	 */
 	public void render(Graphics2D g) {
 		// Render code goes here.
+	}
+	
+	public void setCoords(int newX, int newY) {
+		x = newX;
+		y = newY;
 	}
 	
 	public boolean contains(double x, double y) {
